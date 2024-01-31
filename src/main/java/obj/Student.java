@@ -59,15 +59,13 @@ public class Student {
             
             while (rs.next()) {
                 Student student = new Student(
-                        rs.getString("id"),
-                        rs.getString("name"),
-                        rs.getString("password"),
-                        rs.getString("birthday"),
+                        rs.getString("id_student"),
+                        rs.getString("name_student"),
+                        rs.getString("birthday_student"),
                         rs.getString("sex"),
-                        rs.getString("date"),
-                        rs.getString("invalid")
+                        rs.getString("date")
                         );
-                userList.add(user);
+                studentList.add(student);
             }
             return true;
         } catch (Exception e) {

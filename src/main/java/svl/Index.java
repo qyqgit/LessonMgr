@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import obj.Student;
 
 /**
- * Servlet implementation class GetStudent
+ * Servlet implementation class Index
  */
-@WebServlet("/GetStudent")
-public class GetStudent extends HttpServlet {
+@WebServlet("/Index")
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetStudent() {
+    public Index() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +36,7 @@ public class GetStudent extends HttpServlet {
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		Student.getStudentList(conn, studentList);
 		request.setAttribute("studentList", studentList);
-		request.getRequestDispatcher("Student.jsp").forward(request, response);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
