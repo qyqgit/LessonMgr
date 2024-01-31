@@ -28,8 +28,8 @@ CREATE TABLE `class` (
   `level_id_class` int(10) unsigned zerofill NOT NULL,
   PRIMARY KEY (`id_class`),
   KEY `fkey_idx` (`level_id_class`),
-  CONSTRAINT `class_level_id` FOREIGN KEY (`level_id_class`) REFERENCES `classlevel` (`id_class_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+  CONSTRAINT `class_level_id` FOREIGN KEY (`level_id_class`) REFERENCES `classlevel` (`id_class_level`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,6 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES (0000000033,'看家小牛',0000000009),(0000000034,'严防死守',0000000009),(0000000035,'雷达',0000000013),(0000000036,'升降机',0000000013),(0000000037,'魔法棒出击',0000000010),(0000000038,'摘苹果',0000000010);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,8 +51,11 @@ DROP TABLE IF EXISTS `classlevel`;
 CREATE TABLE `classlevel` (
   `id_class_level` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `name_class_level` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_class_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  `id_student` int(10) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`id_class_level`),
+  KEY `classlevel_id_student_idx` (`id_student`),
+  CONSTRAINT `classlevel_id_student` FOREIGN KEY (`id_student`) REFERENCES `student` (`id_student`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +64,7 @@ CREATE TABLE `classlevel` (
 
 LOCK TABLES `classlevel` WRITE;
 /*!40000 ALTER TABLE `classlevel` DISABLE KEYS */;
-INSERT INTO `classlevel` VALUES (0000000008,'小颗粒'),(0000000009,'WeDo2.0'),(0000000010,'Scratch'),(0000000011,'Scratch数学'),(0000000012,'电路'),(0000000013,'EV3');
+INSERT INTO `classlevel` VALUES (0000000014,'电路',0000000001);
 /*!40000 ALTER TABLE `classlevel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,10 +86,10 @@ CREATE TABLE `record` (
   KEY `record_id_teacher_idx` (`id_teacher`),
   KEY `record_id_student_idx` (`id_student`),
   KEY `record_id_class_idx` (`id_class`),
-  CONSTRAINT `record_id_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`),
-  CONSTRAINT `record_id_student` FOREIGN KEY (`id_student`) REFERENCES `student` (`id_student`),
+  CONSTRAINT `record_id_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `record_id_student` FOREIGN KEY (`id_student`) REFERENCES `student` (`id_student`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `record_id_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_teacher`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +98,6 @@ CREATE TABLE `record` (
 
 LOCK TABLES `record` WRITE;
 /*!40000 ALTER TABLE `record` DISABLE KEYS */;
-INSERT INTO `record` VALUES (0000000005,0000000034,NULL,0000000001,0000000001,'2024-01-11 17:58:27');
 /*!40000 ALTER TABLE `record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,11 +110,12 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `id_student` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `name_student` varchar(45) DEFAULT NULL,
+  `name_student` varchar(45) NOT NULL,
   `birthday_student` date DEFAULT NULL,
-  `level_student` varchar(45) DEFAULT NULL,
+  `sex` tinyint(1) DEFAULT NULL,
+  `date` timestamp(1) NOT NULL DEFAULT CURRENT_TIMESTAMP(1) ON UPDATE CURRENT_TIMESTAMP(1),
   PRIMARY KEY (`id_student`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +124,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (0000000001,'小东东','2000-01-01',NULL),(0000000002,'小西西',NULL,NULL);
+INSERT INTO `student` VALUES (0000000001,'小东东','2000-01-01',0,'2024-01-31 09:39:21.1'),(0000000002,'小西西',NULL,1,'2024-01-31 09:39:21.1'),(0000000003,'小明明',NULL,2,'2024-01-31 09:39:21.1'),(0000000004,'小丽丽',NULL,0,'2024-01-31 09:39:21.1'),(0000000006,'小汪汪',NULL,2,'2024-01-31 09:42:42.9');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-12  2:24:13
+-- Dump completed on 2024-01-31 21:00:00
