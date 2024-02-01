@@ -2,8 +2,6 @@ package svl;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +31,12 @@ public class AddClassLevel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		ArrayList<ClassLevel> classLevelList = new ArrayList<ClassLevel>();
-		ClassLevel.getClassLevelList(conn, classLevelList);
 		String classLevelName = request.getParameter("class_level_name");
+		String studentId = request.getParameter("studentId");
 		System.out.println(classLevelName);
-		ClassLevel.addClassLevel(conn, classLevelName);
-		response.sendRedirect("GetClassLevel");
+		System.out.println(studentId);
+		ClassLevel.addClassLevel(conn, classLevelName, studentId);
+		response.sendRedirect("GetClassLevel?studentId=" + studentId);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

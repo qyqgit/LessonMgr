@@ -14,6 +14,10 @@
 	 		<tr>
 	     		<td><c:out value="${studentList.id}" /></td>
 	     		<td><c:out value="${studentList.name}" /></td>
+	     		<td>
+                    <c:url value="GetClassLevel?studentId=${studentList.id}" var="url"></c:url>
+                    <a href="${url }" style="text-decoration:none;"><c:out value="${studentList.name} " escapeXml="false"></c:out></a>
+                </td>
 	     		<td><c:out value="${studentList.birthday}" /></td>
 	     		<td><c:out value="${studentList.sex}" /></td>
 	     		<td><c:out value="${studentList.date}" /></td>

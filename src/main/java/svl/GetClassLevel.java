@@ -34,9 +34,13 @@ public class GetClassLevel extends HttpServlet {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<ClassLevel> classLevelList = new ArrayList<ClassLevel>();
-		ClassLevel.getClassLevelList(conn, classLevelList);
+		//ClassLevel.getClassLevelList(conn, classLevelList);
+		//request.setAttribute("classLevelList", classLevelList);
+		//request.getRequestDispatcher("ClassLevel.jsp").forward(request, response);
+		String studentId = request.getParameter("studentId");
+		ClassLevel.getClassLevelListByStudent(conn, classLevelList, studentId);
 		request.setAttribute("classLevelList", classLevelList);
-		request.getRequestDispatcher("ClassLevel.jsp").forward(request, response);
+		request.getRequestDispatcher("Student.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
