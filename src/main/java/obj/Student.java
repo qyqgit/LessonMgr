@@ -77,4 +77,21 @@ public class Student {
         }
         return false;
 	}
+	public static boolean addStudent(Connection conn, String name, String birthday, String sex) {
+		PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`student` (`name_student`, `birthday_student`, `sex`) VALUES (?, ?, ?)");
+            pstmt.setString(1, name);
+            pstmt.setString(2, birthday);
+            pstmt.setString(3, sex);
+            pstmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            Database.closePreparedStatement(pstmt);
+        }
+        return false;
+	}
 }

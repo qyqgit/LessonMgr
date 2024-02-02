@@ -13,11 +13,14 @@
 		<c:forEach var="classLevelList" items="${requestScope.classLevelList }">
 	 		<tr>
 	     		<td><c:out value="${classLevelList.id}" /></td>
-	     		<td><c:out value="${classLevelList.name}" /></td>
+	     		<td>
+                    <c:url value="GetClass?classLevelId=${classLevelList.id}" var="url"></c:url>
+                    <a href="${url }" style="text-decoration:none;"><c:out value="${classLevelList.name} " escapeXml="false"></c:out></a>
+                </td>
 	 		</tr>
 		</c:forEach>
 	</table>
-	<form action="AddClassLevel?studentId=${param.studentId}">
+	<form method="post" action="AddClassLevel?studentId=${param.studentId}">
 		<label >添加一个课程级别：</label><br>
 		<input type="text" name="class_level_name">
 		<input type="submit">

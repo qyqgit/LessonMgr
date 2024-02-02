@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -13,7 +13,6 @@
 		<c:forEach var="studentList" items="${requestScope.studentList }">
 	 		<tr>
 	     		<td><c:out value="${studentList.id}" /></td>
-	     		<td><c:out value="${studentList.name}" /></td>
 	     		<td>
                     <c:url value="GetClassLevel?studentId=${studentList.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${studentList.name} " escapeXml="false"></c:out></a>
@@ -27,7 +26,7 @@
 	<form action="AddStudent">
 		<label >添加一名同学：</label><br>
 		<input type="text" name="name">
-		<input type="date" name="birthday">
+		<input type="date" name="birthday" value="2000-01-01">
 		<input type="text" name="sex">
 		<input type="submit">
 	</form>
