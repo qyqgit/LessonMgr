@@ -8,19 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import obj.ClassLevel;
+import obj.Subject;
 
 /**
- * Servlet implementation class AddClassLevel
+ * Servlet implementation class AddSubject
  */
-@WebServlet("/AddClassLevel")
-public class AddClassLevel extends HttpServlet {
+@WebServlet("/AddSubject")
+public class AddSubject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddClassLevel() {
+    public AddSubject() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +31,12 @@ public class AddClassLevel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		String classLevelName = request.getParameter("class_level_name");
+		String lessonName = request.getParameter("subject_name");
 		String studentId = request.getParameter("studentId");
-		System.out.println(classLevelName);
+		System.out.println(lessonName);
 		System.out.println(studentId);
-		ClassLevel.addClassLevel(conn, classLevelName, studentId);
-		response.sendRedirect("GetClassLevel?studentId=" + studentId);
+		Subject.addLesson(conn, lessonName, studentId);
+		response.sendRedirect("GetSubject?studentId=" + studentId);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

@@ -10,19 +10,19 @@
 </head>
 <body>
 	<table>
-		<c:forEach var="classList" items="${requestScope.classList }">
+		<c:forEach var="lessonList" items="${requestScope.lessonList }">
 	 		<tr>
-	     		<td><c:out value="${classList.id}" /></td>
+	     		<td><c:out value="${lessonList.id}" /></td>
 	     		<td>
-                    <c:url value="ClassDetail?classId=${classList.id}" var="url"></c:url>
-                    <a href="${url }" style="text-decoration:none;"><c:out value="${classList.name} " escapeXml="false"></c:out></a>
+                    <c:url value="LessonDetail?lessonId=${lessonList.id}" var="url"></c:url>
+                    <a href="${url }" style="text-decoration:none;"><c:out value="${lessonList.name} " escapeXml="false"></c:out></a>
                 </td>
 	 		</tr>
 		</c:forEach>
 	</table>
-	<form method="post" action="AddRecord?studentId=${param.studentId}">
+	<form method="post" action="AddLesson?subjectId=${param.subjectId}">
 		<label >添加一个课程：</label><br>
-		<input type="text" name="classId">
+		<input type="text" name="name">
 		<input type="submit">
 	</form>
 </body>

@@ -13,7 +13,7 @@
 		<c:forEach var="recordList" items="${requestScope.recordList }">
 	 		<tr>
 	     		<td><c:out value="${recordList.id}" /></td>
-	     		<td><c:out value="${recordList.idClass}" /></td>
+	     		<td><c:out value="${recordList.idLesson}" /></td>
 	     		<td><c:out value="${recordList.date}" /></td>
 	     		<td><c:out value="${recordList.idTeacher}" /></td>
 	     		<td><c:out value="${recordList.idStudent}" /></td>

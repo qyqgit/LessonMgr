@@ -36,7 +36,7 @@ public class AddStudent extends HttpServlet {
 		String birthday = request.getParameter("birthday");
 		String sex = request.getParameter("sex");
 		Student.addStudent(conn, name, birthday, sex);
-		response.sendRedirect("Index");
+		response.sendRedirect("GetStudent");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

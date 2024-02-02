@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Record {
 	private String id;
-	private String idClass;
+	private String idLesson;
 	private String date;
 	private String idTeacher;
 	private String idStudent;
@@ -20,11 +20,11 @@ public class Record {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getIdClass() {
-		return idClass;
+	public String getIdLesson() {
+		return idLesson;
 	}
-	public void setIdClass(String idClass) {
-		this.idClass = idClass;
+	public void setIdLesson(String idLesson) {
+		this.idLesson = idLesson;
 	}
 	public String getDate() {
 		return date;
@@ -51,9 +51,9 @@ public class Record {
 		this.timeStamp = timeStamp;
 	}
 	
-	public Record(String idClass, String date, String idTeacher, String idStudent) {
+	public Record(String idLesson, String date, String idTeacher, String idStudent) {
 		super();
-		this.idClass = idClass;
+		this.idLesson = idLesson;
 		this.date = date;
 		this.idTeacher = idTeacher;
 		this.idStudent = idStudent;
@@ -71,7 +71,7 @@ public class Record {
 			while(rs.next()) {
 				Record record = new Record();
 				record.setId(rs.getString("id_record"));
-				record.setIdClass(rs.getString("id_class"));
+				record.setIdLesson(rs.getString("id_lesson"));
 				record.setDate(rs.getString("date_record"));
 				record.setIdTeacher(rs.getString("id_teacher"));
 				record.setIdStudent(rs.getString("id_student"));
@@ -91,8 +91,8 @@ public class Record {
 	public static boolean addRecord(Connection conn, Record myRecord) {
 		PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`record` (`id_class`, `date_record`, `id_teacher`, `id_student`) VALUES (?, ?, ?, ?)");
-            pstmt.setString(1, myRecord.idClass);
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`record` (`id_lesson`, `date_record`, `id_teacher`, `id_student`) VALUES (?, ?, ?, ?)");
+            pstmt.setString(1, myRecord.idLesson);
             pstmt.setString(2, myRecord.date);
             pstmt.setString(3, myRecord.idTeacher);
             pstmt.setString(4, myRecord.idStudent);

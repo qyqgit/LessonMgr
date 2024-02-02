@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import obj.ClassLevel;
+import obj.Subject;
 
 /**
- * Servlet implementation class GetClassLevel
+ * Servlet implementation class GetSubject
  */
-@WebServlet("/GetClassLevel")
-public class GetClassLevel extends HttpServlet {
+@WebServlet("/GetSubject")
+public class GetSubject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetClassLevel() {
+    public GetSubject() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,14 +33,11 @@ public class GetClassLevel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		ArrayList<ClassLevel> classLevelList = new ArrayList<ClassLevel>();
-		//ClassLevel.getClassLevelList(conn, classLevelList);
-		//request.setAttribute("classLevelList", classLevelList);
-		//request.getRequestDispatcher("ClassLevel.jsp").forward(request, response);
+		ArrayList<Subject> subjectList = new ArrayList<Subject>();
 		String studentId = request.getParameter("studentId");
-		ClassLevel.getClassLevelListByStudent(conn, classLevelList, studentId);
-		request.setAttribute("classLevelList", classLevelList);
-		request.getRequestDispatcher("Student.jsp").forward(request, response);
+		Subject.getSubjectListByStudent(conn, subjectList, studentId);
+		request.setAttribute("subjectList", subjectList);
+		request.getRequestDispatcher("Subject.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

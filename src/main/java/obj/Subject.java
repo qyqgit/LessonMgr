@@ -6,16 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ClassLevel {
+public class Subject {
 	private String id;
 	private String name;
 	
 	
-	public ClassLevel() {
+	public Subject() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ClassLevel(String id, String name) {
+	public Subject(String id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,18 +32,18 @@ public class ClassLevel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public static boolean getClassLevelList(Connection conn, ArrayList<ClassLevel> classLevelList) {
+	public static boolean getLessonList(Connection conn, ArrayList<Subject> lessonList) {
 		ResultSet rs = null;
         PreparedStatement pstmt = null;
         
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM lesson.classlevel");
+			pstmt = conn.prepareStatement("SELECT * FROM lesson.subject");
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				ClassLevel classLevel = new ClassLevel();
-				classLevel.setId(rs.getString("id_class_level"));
-				classLevel.setName(rs.getString("name_class_level"));
-				classLevelList.add(classLevel);
+				Subject subject = new Subject();
+				subject.setId(rs.getString("id_subject"));
+				subject.setName(rs.getString("name_subject"));
+				lessonList.add(subject);
 			}
 			return true;
 		} catch (SQLException e) {
@@ -55,19 +55,19 @@ public class ClassLevel {
 		}
 		return false; 
 	}
-	public static boolean getClassLevelListByStudent(Connection conn, ArrayList<ClassLevel> classLevelList, String studentId) {
+	public static boolean getSubjectListByStudent(Connection conn, ArrayList<Subject> subjectList, String studentId) {
 		ResultSet rs = null;
         PreparedStatement pstmt = null;
         
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM lesson.classlevel WHERE id_student = ?");
+			pstmt = conn.prepareStatement("SELECT * FROM lesson.subject WHERE id_student = ?");
 			pstmt.setString(1, studentId);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				ClassLevel classLevel = new ClassLevel();
-				classLevel.setId(rs.getString("id_class_level"));
-				classLevel.setName(rs.getString("name_class_level"));
-				classLevelList.add(classLevel);
+				Subject subject = new Subject();
+				subject.setId(rs.getString("id_subject"));
+				subject.setName(rs.getString("name_subject"));
+				subjectList.add(subject);
 			}
 			return true;
 		} catch (SQLException e) {
@@ -79,11 +79,11 @@ public class ClassLevel {
 		}
 		return false;
 	}
-	public static boolean addClassLevel(Connection conn, String classLeveName, String studentId) {
+	public static boolean addLesson(Connection conn, String lessonName, String studentId) {
 		PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`classlevel` (`name_class_level`, `id_student`) VALUES (?,?)");
-            pstmt.setString(1, classLeveName);
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`subject` (`name_subject`, `id_student`) VALUES (?,?)");
+            pstmt.setString(1, lessonName);
             pstmt.setString(2, studentId);
             pstmt.executeUpdate();
             return true;
