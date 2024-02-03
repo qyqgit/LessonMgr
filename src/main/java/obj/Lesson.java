@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class Lesson {
 	private String id;
 	private String name;
-	private String lessonId;
+	private String subjectId;
+	private String isRaw;
 	public String getId() {
 		return id;
 	}
@@ -21,11 +22,11 @@ public class Lesson {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLessonId() {
-		return lessonId;
+	public String getSubjectId() {
+		return subjectId;
 	}
-	public void setLessonId(String lessonId) {
-		this.lessonId = lessonId;
+	public void setSubjectId(String lessonId) {
+		this.subjectId = lessonId;
 	}
 	
 	
@@ -34,7 +35,7 @@ public class Lesson {
 		super();
 		this.id = id;
 		this.name = name;
-		this.lessonId = lessonId;
+		this.subjectId = lessonId;
 	}
 	public static boolean getLessonList(Connection conn, ArrayList<Lesson> classList, String subjectId) {
 		PreparedStatement pstmt = null;

@@ -32,12 +32,14 @@ public class AddRecord extends HttpServlet {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		Record myRecord = new Record();
-		myRecord.setIdLesson(request.getParameter("id_class"));
-		myRecord.setDate(request.getParameter("date_record"));
-		myRecord.setIdTeacher(request.getParameter("id_teacher"));
-		myRecord.setIdStudent(request.getParameter("id_student"));
+		myRecord.setIdLesson(request.getParameter("lessonId"));
+		myRecord.setDate(request.getParameter("date_record") + " " + request.getParameter("time_record"));
+		//myRecord.setIdTeacher(request.getParameter("id_teacher"));
+		//myRecord.setIdStudent(request.getParameter("id_student"));
+		myRecord.setIdTeacher("1");
+		myRecord.setIdStudent("2");
 		Record.addRecord(conn, myRecord);
-		response.sendRedirect("GetRecord");
+		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

@@ -17,6 +17,18 @@
                     <c:url value="LessonDetail?lessonId=${lessonList.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${lessonList.name} " escapeXml="false"></c:out></a>
                 </td>
+                <td>
+                </td>
+                <td>
+				    <form method="post" action="AddRecord?lessonId=${lessonList.id}&subjectId=${lessonList.subjectId}">
+						<input type="date" name="date_record">
+						<input type="time" name="time_record">
+						<input type="submit" value="添加记录">
+					</form>
+                </td>
+                <td>
+                	<a href="DeleteRecord?lessonId=${lessonList.id}" style="text-decoration:none;">删除记录</a>
+                </td>
 	 		</tr>
 		</c:forEach>
 	</table>

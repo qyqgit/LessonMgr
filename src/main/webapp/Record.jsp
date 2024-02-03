@@ -25,6 +25,7 @@
 		<label >添加一个上课记录：</label><br>
 		<input type="text" name="id_class">
 		<input type="date" name="date_record">
+		<input type="time" name="time_record">
 		<input type="text" name="id_teacher">
 		<input type="text" name="id_student">
 		<input type="submit">
