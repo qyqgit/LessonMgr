@@ -13,6 +13,13 @@
 </head>
 <body>
 	<table>
+		<tr bgcolor="#EEEEEE">
+	   		<td>学号</td>
+	   		<td>姓名</td>
+	   		<td>年龄</td>
+	   		<td>性别</td>
+	   		<td>上课记录</td>
+		</tr>
 		<c:forEach var="studentList" items="${requestScope.studentList }">
 	 		<tr>
 	     		<td><c:out value="${studentList.id}" /></td>

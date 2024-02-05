@@ -10,9 +10,15 @@
 </head>
 <body>
 	<table>
+		<tr bgcolor="#EEEEEE">
+			<td>序号</td>
+     		<td>科目</td>
+            <td>上课次数</td>
+            <td>总课数</td>
+ 		</tr>
 		<c:forEach var="subjectList" items="${requestScope.subjectList }">
 	 		<tr>
-	     		<td><c:out value="${subjectList.id}" /></td>
+	 			<td>${subjectList.id}</td>
 	     		<td>
                     <c:url value="GetLesson?subjectId=${subjectList.id}&studentId=${param.studentId}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${subjectList.name} " escapeXml="false"></c:out></a>

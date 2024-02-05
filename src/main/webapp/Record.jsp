@@ -10,8 +10,9 @@
 </head>
 <body>
 	<table>
+		<tr bgcolor="#EEEEEE"><td>上课时间</td><td>科目</td><td>课程名称</td><td>老师</td><td>学生</td><td>课次</td></tr>
 		<c:forEach var="recordList" items="${requestScope.recordList }">
-	 		<tr bgcolor="#CCFF80">
+	 		<tr>
 	     		<!--<td><c:out value="${recordList.id}" /></td>-->
 	     		<td><c:out value="${recordList.date}" /></td>
 	     		<td><c:out value="${recordList.idSubject}" /></td>
@@ -21,6 +22,7 @@
 	     		<!--<td><c:out value="${recordList.timeStamp}" /></td>-->
 	     		<td><c:out value="${recordList.times}" /></td>
 	 		</tr>
+	 		<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
 		</c:forEach>
 	</table>
 </body>

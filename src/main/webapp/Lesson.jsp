@@ -10,14 +10,18 @@
 </head>
 <body>
 	<table>
+ 		<tr bgcolor="#EEEEEE">
+     		<td>序号</td>
+     		<td>名称</td>
+               <td>上课日期 上课时间 添加记录</td>
+               <td>删除记录</td>
+ 		</tr>
 		<c:forEach var="lessonList" items="${requestScope.lessonList }">
 	 		<tr <c:if test="${lessonList.datetime != null}">bgcolor="#CCFF80"</c:if>>
 	     		<td><c:out value="${lessonList.id}" /></td>
 	     		<td>
                     <c:url value="LessonDetail?lessonId=${lessonList.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${lessonList.name} " escapeXml="false"></c:out></a>
-                </td>
-                <td>
                 </td>
                 <td>
 				    <form method="post" action="AddRecord?lessonId=${lessonList.id}&subjectId=${lessonList.subjectId}&studentId=${param.studentId}">

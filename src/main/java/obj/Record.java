@@ -94,7 +94,7 @@ public class Record {
 				//record.setId(rs.getString("id_record"));
 				record.setIdLesson(rs.getString("name_lesson"));
 				record.setIdSubject(rs.getString("name_subject"));
-				record.setDate(rs.getString("date_record"));
+				record.setDate(rs.getString("date_record").substring(0, 16));
 				record.setIdTeacher(rs.getString("name_teacher"));
 				record.setIdStudent(rs.getString("name_student"));
 				//record.setTimeStamp(rs.getString("timeStamp_record"));
