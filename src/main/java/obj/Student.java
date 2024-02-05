@@ -62,8 +62,8 @@ public class Student {
                         rs.getString("id_student"),
                         rs.getString("name_student"),
                         rs.getString("birthday_student"),
-                        rs.getString("sex"),
-                        rs.getString("date")
+                        rs.getString("sex_student"),
+                        rs.getString("date_student")
                         );
                 studentList.add(student);
             }
@@ -80,7 +80,7 @@ public class Student {
 	public static boolean addStudent(Connection conn, String name, String birthday, String sex) {
 		PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`student` (`name_student`, `birthday_student`, `sex`) VALUES (?, ?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`student` (`name_student`, `birthday_student`, `sex_student`) VALUES (?, ?, ?)");
             pstmt.setString(1, name);
             pstmt.setString(2, birthday);
             pstmt.setString(3, sex);

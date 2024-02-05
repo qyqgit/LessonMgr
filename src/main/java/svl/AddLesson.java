@@ -34,8 +34,9 @@ public class AddLesson extends HttpServlet {
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		String name = request.getParameter("name");
 		String subjectId = request.getParameter("subjectId");
+		String studentId = request.getParameter("studentId");
 		Lesson.addLesson(conn, name, subjectId);
-		response.sendRedirect("GetLesson?subjectId=" + subjectId);
+		response.sendRedirect("GetLesson?subjectId=" + subjectId + "&studentId=" + studentId);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

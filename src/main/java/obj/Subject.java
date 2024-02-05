@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Subject {
 	private String id;
 	private String name;
-	
+	private int cooked;
+	private int amount;
 	
 	public Subject() {
 		super();
@@ -32,7 +33,19 @@ public class Subject {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public static boolean getLessonList(Connection conn, ArrayList<Subject> lessonList) {
+	public int getCooked() {
+		return cooked;
+	}
+	public void setCooked(int cooked) {
+		this.cooked = cooked;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public static boolean getSubjectList(Connection conn, ArrayList<Subject> lessonList) {
 		ResultSet rs = null;
         PreparedStatement pstmt = null;
         
@@ -60,13 +73,15 @@ public class Subject {
         PreparedStatement pstmt = null;
         
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM lesson.subject WHERE id_student = ?");
+			pstmt = conn.prepareStatement("SELECT * FROM lesson.subject WHERE id_student_subject = ?");
 			pstmt.setString(1, studentId);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Subject subject = new Subject();
 				subject.setId(rs.getString("id_subject"));
 				subject.setName(rs.getString("name_subject"));
+				subject.setCooked(rs.getInt("cooked_subject"));
+				subject.setAmount(rs.getInt("amount_subject"));
 				subjectList.add(subject);
 			}
 			return true;
@@ -82,7 +97,7 @@ public class Subject {
 	public static boolean addLesson(Connection conn, String lessonName, String studentId) {
 		PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`subject` (`name_subject`, `id_student`) VALUES (?,?)");
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`subject` (`name_subject`, `id_student_subject`) VALUES (?,?)");
             pstmt.setString(1, lessonName);
             pstmt.setString(2, studentId);
             pstmt.executeUpdate();

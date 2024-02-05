@@ -35,11 +35,11 @@ public class AddRecord extends HttpServlet {
 		myRecord.setIdLesson(request.getParameter("lessonId"));
 		myRecord.setDate(request.getParameter("date_record") + " " + request.getParameter("time_record"));
 		//myRecord.setIdTeacher(request.getParameter("id_teacher"));
-		//myRecord.setIdStudent(request.getParameter("id_student"));
+		myRecord.setIdStudent(request.getParameter("studentId"));
+		myRecord.setIdSubject(request.getParameter("subjectId"));
 		myRecord.setIdTeacher("1");
-		myRecord.setIdStudent("2");
 		Record.addRecord(conn, myRecord);
-		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId"));
+		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId") + "&studentId=" + request.getParameter("studentId"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

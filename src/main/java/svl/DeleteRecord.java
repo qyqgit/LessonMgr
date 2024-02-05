@@ -2,7 +2,6 @@ package svl;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import obj.Record;
 
 /**
- * Servlet implementation class GetRecord
+ * Servlet implementation class DeleteRecord
  */
-@WebServlet("/GetRecord")
-public class GetRecord extends HttpServlet {
+@WebServlet("/DeleteRecord")
+public class DeleteRecord extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetRecord() {
+    public DeleteRecord() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +32,8 @@ public class GetRecord extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		ArrayList<Record> recordList = new ArrayList<Record>();
-		Record.getRecordListByStudent(conn, recordList, request.getParameter("studentId"));
-		request.setAttribute("recordList", recordList);
-		request.getRequestDispatcher("Record.jsp").forward(request, response);
+		Record.deleteRecord(conn, request.getParameter("lessonId"));
+		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

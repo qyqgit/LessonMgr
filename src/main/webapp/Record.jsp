@@ -11,24 +11,17 @@
 <body>
 	<table>
 		<c:forEach var="recordList" items="${requestScope.recordList }">
-	 		<tr>
-	     		<td><c:out value="${recordList.id}" /></td>
-	     		<td><c:out value="${recordList.idLesson}" /></td>
+	 		<tr bgcolor="#CCFF80">
+	     		<!--<td><c:out value="${recordList.id}" /></td>-->
 	     		<td><c:out value="${recordList.date}" /></td>
+	     		<td><c:out value="${recordList.idSubject}" /></td>
+	     		<td><c:out value="${recordList.idLesson}" /></td>
 	     		<td><c:out value="${recordList.idTeacher}" /></td>
 	     		<td><c:out value="${recordList.idStudent}" /></td>
-	     		<td><c:out value="${recordList.timeStamp}" /></td>
+	     		<!--<td><c:out value="${recordList.timeStamp}" /></td>-->
+	     		<td><c:out value="${recordList.times}" /></td>
 	 		</tr>
 		</c:forEach>
 	</table>
-	<form action="AddRecord">
-		<label >添加一个上课记录：</label><br>
-		<input type="text" name="id_class">
-		<input type="date" name="date_record">
-		<input type="time" name="time_record">
-		<input type="text" name="id_teacher">
-		<input type="text" name="id_student">
-		<input type="submit">
-	</form>
 </body>
 </html>

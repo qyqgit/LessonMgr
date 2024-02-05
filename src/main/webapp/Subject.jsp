@@ -14,8 +14,14 @@
 	 		<tr>
 	     		<td><c:out value="${subjectList.id}" /></td>
 	     		<td>
-                    <c:url value="GetLesson?subjectId=${subjectList.id}" var="url"></c:url>
+                    <c:url value="GetLesson?subjectId=${subjectList.id}&studentId=${param.studentId}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${subjectList.name} " escapeXml="false"></c:out></a>
+                </td>
+                <td>
+                	${subjectList.cooked}
+                </td>
+                <td>
+                	${subjectList.amount}
                 </td>
 	 		</tr>
 		</c:forEach>
@@ -23,7 +29,7 @@
 	<form method="post" action="AddSubject?studentId=${param.studentId}">
 		<label >添加一个科目：</label><br>
 		<input type="text" name="subject_name">
-		<input type="submit">
+		<input type="submit" value="添加">
 	</form>
 </body>
 </html>

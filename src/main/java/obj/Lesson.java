@@ -9,7 +9,7 @@ public class Lesson {
 	private String id;
 	private String name;
 	private String subjectId;
-	private String isRaw;
+	private String datetime;
 	public String getId() {
 		return id;
 	}
@@ -25,23 +25,31 @@ public class Lesson {
 	public String getSubjectId() {
 		return subjectId;
 	}
-	public void setSubjectId(String lessonId) {
-		this.subjectId = lessonId;
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
 	}
 	
 	
 	
-	public Lesson(String id, String name, String lessonId) {
+	public String getDatetime() {
+		return datetime;
+	}
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
+	
+	public Lesson(String id, String name, String subjectId, String datetime) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.subjectId = lessonId;
+		this.subjectId = subjectId;
+		this.datetime = datetime;
 	}
 	public static boolean getLessonList(Connection conn, ArrayList<Lesson> classList, String subjectId) {
 		PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM lesson.lesson WHERE `subject_id_lesson`= ?");
+            pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM lesson.lesson WHERE lesson.id_subject_lesson = ?) AS table1 LEFT JOIN lesson.record ON table1.id_lesson = record.id_lesson_record");
             pstmt.setString(1, subjectId);
             rs = pstmt.executeQuery();
             
@@ -49,7 +57,8 @@ public class Lesson {
                 Lesson lesson = new Lesson(
                         rs.getString("id_lesson"),
                         rs.getString("name_lesson"),
-                        rs.getString("subject_id_lesson")
+                        rs.getString("id_subject_lesson"),
+                        rs.getString("date_record")
                         );
                 classList.add(lesson);
             }
@@ -67,7 +76,7 @@ public class Lesson {
 	public static boolean addLesson(Connection conn, String name, String subjectId) {
 		PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`lesson` (`name_lesson`, `subject_id_lesson`) VALUES (?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO `lesson`.`lesson` (`name_lesson`, `id_subject_lesson`) VALUES (?, ?)");
             pstmt.setString(1, name);
             pstmt.setString(2, subjectId);
             pstmt.executeUpdate();
