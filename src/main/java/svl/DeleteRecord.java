@@ -33,7 +33,7 @@ public class DeleteRecord extends HttpServlet {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		Record.deleteRecord(conn, request.getParameter("lessonId"));
-		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId"));
+		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId") + "&studentId=" + request.getParameter("studentId"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

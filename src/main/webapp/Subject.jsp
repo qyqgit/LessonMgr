@@ -36,6 +36,7 @@
 		<label >添加一个科目：</label><br>
 		<input type="text" name="subject_name">
 		<input type="submit" value="添加">
+		<a href="GetStudent">返回</a>
 	</form>
 </body>
 </html>
