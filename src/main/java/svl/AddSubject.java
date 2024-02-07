@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import obj.Student;
 import obj.Subject;
 
 /**
@@ -30,13 +31,16 @@ public class AddSubject extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		String lessonName = request.getParameter("subject_name");
+		String subjectName = request.getParameter("subject_name").trim();
 		String studentId = request.getParameter("studentId");
-		System.out.println(lessonName);
-		System.out.println(studentId);
-		Subject.addLesson(conn, lessonName, studentId);
-		response.sendRedirect("GetSubject?studentId=" + studentId);
+		Student student = new Student();
+		Connection conn = (Connection)request.getSession().getAttribute("conn");
+		if(subjectName.length() != 0) {
+			Subject.addLesson(conn, subjectName, studentId);
+		}
+		Student.getStudent(conn, student, studentId);
+		request.setAttribute("student", student);
+		request.getRequestDispatcher("GetSubject?studentId=" + studentId).forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

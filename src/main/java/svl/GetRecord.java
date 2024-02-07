@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import obj.Record;
+import obj.Student;
 
 /**
  * Servlet implementation class GetRecord
@@ -34,7 +35,11 @@ public class GetRecord extends HttpServlet {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<Record> recordList = new ArrayList<Record>();
-		Record.getRecordListByStudent(conn, recordList, request.getParameter("studentId"));
+		String studentId = request.getParameter("studentId");
+		Student student = new Student();
+		Student.getStudent(conn, student, studentId);
+		request.setAttribute("student", student);
+		Record.getRecordListByStudent(conn, recordList, studentId);
 		request.setAttribute("recordList", recordList);
 		request.getRequestDispatcher("Record.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());

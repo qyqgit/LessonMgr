@@ -50,6 +50,34 @@ public class Student {
 		this.sex = sex;
 		this.date = date;
 	}
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	public static boolean getStudent(Connection conn, Student student, String studentId) {
+		PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM lesson.student WHERE (`id_student` = ?)");
+            pstmt.setString(1, studentId);
+            rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+            	student.setId(rs.getString("id_student"));
+                student.setName(rs.getString("name_student"));
+                student.setBirthday(rs.getString("birthday_student"));
+                student.setSex(rs.getString("sex_student"));
+                student.setDate(rs.getString("date_student"));
+            }
+            return true;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally {
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
+        }
+		return false;
+	}
 	public static boolean getStudentList(Connection conn, ArrayList<Student> studentList) {
 		PreparedStatement pstmt = null;
         ResultSet rs = null;

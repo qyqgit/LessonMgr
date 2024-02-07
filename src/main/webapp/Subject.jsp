@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>${requestScope.student.name }</title>
 </head>
 <body>
 	<table>
 		<tr bgcolor="#EEEEEE">
-			<td>序号</td>
+			<td>编号</td>
      		<td>科目</td>
             <td>上课次数</td>
             <td>总课数</td>
@@ -20,7 +20,7 @@
 	 		<tr>
 	 			<td>${subjectList.id}</td>
 	     		<td>
-                    <c:url value="GetLesson?subjectId=${subjectList.id}&studentId=${param.studentId}" var="url"></c:url>
+                    <c:url value="GetLesson?subjectId=${subjectList.id}&studentId=${requestScope.student.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${subjectList.name} " escapeXml="false"></c:out></a>
                 </td>
                 <td>
@@ -32,11 +32,11 @@
 	 		</tr>
 		</c:forEach>
 	</table>
-	<form method="post" action="AddSubject?studentId=${param.studentId}">
+	<form method="post" action="AddSubject?studentId=${requestScope.student.id}">
 		<label >添加一个科目：</label><br>
 		<input type="text" name="subject_name">
 		<input type="submit" value="添加">
-		<a href="GetStudent">返回</a>
+		<a href="GetStudent" style="text-decoration:none;">返回</a>
 	</form>
 </body>
 </html>

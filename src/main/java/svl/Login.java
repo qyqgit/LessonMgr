@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import obj.Record;
-import obj.Student;
+import obj.Teacher;
 
 /**
- * Servlet implementation class DeleteRecord
+ * Servlet implementation class Login
  */
-@WebServlet("/DeleteRecord")
-public class DeleteRecord extends HttpServlet {
+@WebServlet("/Login")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteRecord() {
+    public Login() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,15 +31,17 @@ public class DeleteRecord extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		String studentId = request.getParameter("studentId");
-		String subjectId = request.getParameter("subjectId");
-		Student student = new Student();
-		Student.getStudent(conn, student, studentId);
-		request.setAttribute("student", student);
-		Record.deleteRecord(conn, studentId, request.getParameter("lessonId"));
-		request.getRequestDispatcher("GetLesson?subjectId=" + subjectId +
-				"&studentId=" + studentId).forward(request, response);
+		String teacherId = request.getParameter("id").trim();
+		String teacherPassword = request.getParameter("password").trim();
+		if(teacherId.length() !=0 && teacherPassword.length() != 0) {
+			Connection conn = (Connection)request.getSession().getAttribute("conn");
+			Teacher teacher = new Teacher();
+			Teacher.getTeacher(conn, teacher, teacherId);
+			if(teacher.getPassword().equalsIgnoreCase(teacherPassword)) {
+				request.getSession().setAttribute("teacher", teacher);
+			}
+		}
+		response.sendRedirect("GetStudent");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

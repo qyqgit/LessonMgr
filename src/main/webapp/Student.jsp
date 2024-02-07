@@ -9,9 +9,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>学生</title>
 </head>
 <body>
+	<c:out value="${sessionScope.teacher.name }"></c:out>
+	<c:if test="${sessionScope.teacher == null }"><a href="Login.jsp" style="text-decoration:none;">登录</a></c:if>
+	<c:if test="${sessionScope.teacher != null }"><a href="Logout" style="text-decoration:none;">注销</a></c:if>
 	<table>
 		<tr bgcolor="#EEEEEE">
 	   		<td>学号</td>
@@ -36,7 +39,7 @@
 	     			<c:if test="${studentList.sex == 0 }">男</c:if>
 	     			<c:if test="${studentList.sex == 1 }">女</c:if>
 	     		</td>
-	     		<td><a href="GetRecord?studentId=${studentList.id }">上课记录</a></td>
+	     		<td><a href="GetRecord?studentId=${studentList.id }" style="text-decoration:none;">上课记录</a></td>
 	     		<!--<td><c:out value="${studentList.date}" /></td>-->
 	 		</tr>
 		</c:forEach>

@@ -31,11 +31,13 @@ public class AddStudent extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		String name = request.getParameter("name");
-		String birthday = request.getParameter("birthday");
-		String sex = request.getParameter("sex");
-		Student.addStudent(conn, name, birthday, sex);
+		String name = request.getParameter("name").trim();
+		if(name.length() != 0) {
+			Connection conn = (Connection)request.getSession().getAttribute("conn");
+			String birthday = request.getParameter("birthday");
+			String sex = request.getParameter("sex");
+			Student.addStudent(conn, name, birthday, sex);
+		}
 		response.sendRedirect("GetStudent");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

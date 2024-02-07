@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import obj.Lesson;
+import obj.Student;
 
 /**
  * Servlet implementation class AddLesson
@@ -31,12 +32,18 @@ public class AddLesson extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		String name = request.getParameter("name");
+		String name = request.getParameter("name").trim();
 		String subjectId = request.getParameter("subjectId");
 		String studentId = request.getParameter("studentId");
-		Lesson.addLesson(conn, name, subjectId);
-		response.sendRedirect("GetLesson?subjectId=" + subjectId + "&studentId=" + studentId);
+		Student student = new Student();
+		Connection conn = (Connection)request.getSession().getAttribute("conn");
+		if(name.length() != 0) {
+			Lesson.addLesson(conn, name, subjectId);
+		}
+		Student.getStudent(conn, student, studentId);
+		request.setAttribute("student", student);
+		request.getRequestDispatcher("GetLesson?subjectId=" + subjectId +
+				"&studentId=" + studentId).forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

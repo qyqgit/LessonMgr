@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import obj.Student;
 import obj.Subject;
 
 /**
@@ -35,6 +36,9 @@ public class GetSubject extends HttpServlet {
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<Subject> subjectList = new ArrayList<Subject>();
 		String studentId = request.getParameter("studentId");
+		Student student = new Student();
+		Student.getStudent(conn, student, studentId);
+		request.setAttribute("student", student);
 		Subject.getSubjectListByStudent(conn, subjectList, studentId);
 		request.setAttribute("subjectList", subjectList);
 		request.getRequestDispatcher("Subject.jsp").forward(request, response);

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import obj.Record;
+import obj.Student;
+import obj.Teacher;
 
 /**
  * Servlet implementation class AddRecord
@@ -30,16 +32,27 @@ public class AddRecord extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Student student = new Student();
+		String date = request.getParameter("date_record");
+		String time = request.getParameter("time_record");
+		String subjectId = request.getParameter("subjectId");
+		String studentId = request.getParameter("studentId");
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
-		Record myRecord = new Record();
-		myRecord.setIdLesson(request.getParameter("lessonId"));
-		myRecord.setDate(request.getParameter("date_record") + " " + request.getParameter("time_record"));
-		//myRecord.setIdTeacher(request.getParameter("id_teacher"));
-		myRecord.setIdStudent(request.getParameter("studentId"));
-		myRecord.setIdSubject(request.getParameter("subjectId"));
-		myRecord.setIdTeacher("1");
-		Record.addRecord(conn, myRecord);
-		response.sendRedirect("GetLesson?subjectId=" + request.getParameter("subjectId") + "&studentId=" + request.getParameter("studentId"));
+		if(date.length() != 0 && time.length() != 0) {
+			String lessonId = request.getParameter("lessonId");
+			String teacherId = ((Teacher)request.getSession().getAttribute("teacher")).getId();
+			Record myRecord = new Record();
+			myRecord.setIdLesson(lessonId);
+			myRecord.setDate(date + " " + time);
+			myRecord.setIdTeacher(teacherId);
+			myRecord.setIdStudent(studentId);
+			myRecord.setIdSubject(subjectId);
+			Record.addRecord(conn, myRecord);
+		}
+		Student.getStudent(conn, student, studentId);
+		request.setAttribute("student", student);
+		request.getRequestDispatcher("GetLesson?subjectId=" + subjectId +
+				"&studentId=" + studentId).forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

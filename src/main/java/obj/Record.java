@@ -81,17 +81,44 @@ public class Record {
 	public Record() {
 		// TODO Auto-generated constructor stub
 	}
+	public static boolean getLatestRecord(Connection conn, Record record, String studentId) {
+		ResultSet rs = null;
+        PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT id_record, date_record, name_subject, id_lesson, name_student, name_teacher, times_record FROM lesson.record, lesson.lesson, lesson.subject, lesson.teacher, lesson.student WHERE id_student_record = ? AND id_lesson_record = id_lesson AND id_subject_record = id_subject AND id_student_record = id_student AND id_teacher_record = id_teacher ORDER BY times_record DESC");
+			pstmt.setString(1, studentId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				record.setId(rs.getString("id_record"));
+				record.setIdLesson(rs.getString("id_lesson"));
+				record.setIdSubject(rs.getString("name_subject"));
+				record.setDate(rs.getString("date_record").substring(0, 16));
+				record.setIdTeacher(rs.getString("name_teacher"));
+				record.setIdStudent(rs.getString("name_student"));
+				//record.setTimeStamp(rs.getString("timeStamp_record"));
+				record.setTimes(rs.getString("times_record"));
+			}
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Database.closeResultSet(rs);
+			Database.closePreparedStatement(pstmt);
+		}
+		return false;
+	}
 	public static boolean getRecordListByStudent(Connection conn, ArrayList<Record> recordList, String studentId) {
 		ResultSet rs = null;
         PreparedStatement pstmt = null;
         
 		try {
-			pstmt = conn.prepareStatement("SELECT date_record, name_subject, name_lesson, name_student, name_teacher, times_record FROM lesson.record, lesson.lesson, lesson.subject, lesson.teacher, lesson.student WHERE id_student_record = ? AND id_lesson_record = id_lesson AND id_subject_record = id_subject AND id_student_record = id_student AND id_teacher_record = id_teacher;");
+			pstmt = conn.prepareStatement("SELECT id_record, date_record, name_subject, name_lesson, name_student, name_teacher, times_record FROM lesson.record, lesson.lesson, lesson.subject, lesson.teacher, lesson.student WHERE id_student_record = ? AND id_lesson_record = id_lesson AND id_subject_record = id_subject AND id_student_record = id_student AND id_teacher_record = id_teacher ORDER BY times_record DESC");
 			pstmt.setString(1, studentId);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Record record = new Record();
-				//record.setId(rs.getString("id_record"));
+				record.setId(rs.getString("id_record"));
 				record.setIdLesson(rs.getString("name_lesson"));
 				record.setIdSubject(rs.getString("name_subject"));
 				record.setDate(rs.getString("date_record").substring(0, 16));
@@ -131,18 +158,22 @@ public class Record {
 		return false;
 		
 	}
-	public static boolean deleteRecord(Connection conn, String lessonId) {
-		PreparedStatement pstmt = null;
-        try {
-            pstmt = conn.prepareStatement("DELETE FROM `lesson`.`record` WHERE `id_lesson_record`= ?");
-            pstmt.setString(1, lessonId);
-            pstmt.executeUpdate();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            Database.closePreparedStatement(pstmt);
-        } 
+	public static boolean deleteRecord(Connection conn, String studentId, String lessonId) {
+		Record latestRecord = new Record();
+		Record.getLatestRecord(conn, latestRecord, studentId);
+		if(latestRecord.getIdLesson().equals(lessonId)) {
+			PreparedStatement pstmt = null;
+	        try {
+	            pstmt = conn.prepareStatement("DELETE FROM `lesson`.`record` WHERE `id_lesson_record`= ?");
+	            pstmt.setString(1, lessonId);
+	            pstmt.executeUpdate();
+	            return true;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }finally {
+	            Database.closePreparedStatement(pstmt);
+	        } 
+        }
         return false;
 	}
 }
