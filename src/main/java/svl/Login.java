@@ -5,6 +5,7 @@ import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,12 @@ public class Login extends HttpServlet {
 			Teacher.getTeacher(conn, teacher, teacherId);
 			if(teacher.getPassword().equalsIgnoreCase(teacherPassword)) {
 				request.getSession().setAttribute("teacher", teacher);
+				Cookie ck = new Cookie("TOKEN", request.getSession().getId());
+		        ck.setMaxAge(3600 * 24 * 31);
+		        ck.setHttpOnly(true);
+		        //ck.setSecure(true);
+		        Teacher.updateTeacherToken(conn, teacherId, request.getSession().getId());
+		        response.addCookie(ck);
 			}
 		}
 		response.sendRedirect("GetStudent");

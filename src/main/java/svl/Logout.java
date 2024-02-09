@@ -1,11 +1,16 @@
 package svl;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import obj.Teacher;
 
 /**
  * Servlet implementation class Logout
@@ -27,7 +32,14 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getSession().removeAttribute("teacher");
+		Teacher teacher = (Teacher)request.getSession().getAttribute("teacher");
+		Connection conn = (Connection)request.getSession().getAttribute("conn");
+		if(Teacher.updateTeacherToken(conn, teacher.getId(), "")) {
+			Cookie ck = new Cookie("TOKEN", "");
+            ck.setMaxAge(0);
+            response.addCookie(ck);
+			request.getSession().removeAttribute("teacher");
+		}
 		response.sendRedirect("GetStudent");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

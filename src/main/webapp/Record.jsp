@@ -22,7 +22,7 @@
 	     		<!--<td><c:out value="${recordList.timeStamp}" /></td>-->
 	     		<td><c:out value="${recordList.times}" /></td>
 	 		</tr>
-	 		<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
+	 		<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
 		</c:forEach>
 	</table>
 </body>

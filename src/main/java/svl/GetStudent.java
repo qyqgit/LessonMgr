@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import obj.Student;
+import obj.Subject;
 
 /**
  * Servlet implementation class GetStudent
@@ -35,6 +36,11 @@ public class GetStudent extends HttpServlet {
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		Student.getStudentList(conn, studentList);
+		for(int i = 0; i < studentList.size(); i++) {
+			ArrayList<Subject> subjectList = new ArrayList<Subject>();
+			Subject.getSubjectListByStudent(conn, subjectList, studentList.get(i).getId());
+			studentList.get(i).setSubjectList(subjectList);
+		}
 		request.setAttribute("studentList", studentList);
 		request.getRequestDispatcher("Student.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());

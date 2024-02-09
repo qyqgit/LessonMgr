@@ -67,5 +67,43 @@ public class Teacher {
 		}
 		return false;
 	}
-	
+	public static boolean getTeacherByToken(Connection conn, Teacher teacher, String token) {
+		ResultSet rs = null;
+        PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM lesson.teacher WHERE token_teacher= ?");
+			pstmt.setString(1, token);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				teacher.setId(rs.getString("id_teacher"));
+				teacher.setName(rs.getString("name_teacher"));
+				teacher.setPassword(rs.getString("password_teacher"));
+				teacher.setToken(rs.getString("token_teacher"));
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Database.closeResultSet(rs);
+			Database.closePreparedStatement(pstmt);
+		}
+		return false;
+	}
+	public static boolean updateTeacherToken(Connection conn, String teacherId, String token) {
+		PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("UPDATE `lesson`.`teacher` SET `token_teacher` = ? WHERE (`id_teacher` = ?);");
+            pstmt.setString(1, token);
+            pstmt.setString(2, teacherId);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            Database.closePreparedStatement(pstmt);
+        }
+		return false;
+	}
 }

@@ -13,10 +13,14 @@
 		<tr bgcolor="#EEEEEE">
 			<td>编号</td>
      		<td>科目</td>
-            <td>上课次数</td>
-            <td>总课数</td>
+            <td>已上课次</td>
+            <td>总课次</td>
  		</tr>
+ 		<c:set value="0" var="cooked_sum"/>
+ 		<c:set value="0" var="amount_sum"/>
 		<c:forEach var="subjectList" items="${requestScope.subjectList }">
+			<c:set value="${cooked_sum+subjectList.cooked }" var="cooked_sum"/>
+			<c:set value="${amount_sum+subjectList.amount }" var="amount_sum"/>
 	 		<tr>
 	 			<td>${subjectList.id}</td>
 	     		<td>
@@ -31,7 +35,20 @@
                 </td>
 	 		</tr>
 		</c:forEach>
+		<tr>
+			<td><hr></td>
+			<td><hr></td>
+			<td><hr></td>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>合计</td>
+			<td>${cooked_sum }</td>
+			<td>${amount_sum}</td>
+		</tr>
 	</table>
+	<br>
 	<form method="post" action="AddSubject?studentId=${requestScope.student.id}">
 		<label >添加一个科目：</label><br>
 		<input type="text" name="subject_name">

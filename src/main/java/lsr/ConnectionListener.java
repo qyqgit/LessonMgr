@@ -8,16 +8,16 @@ import javax.servlet.http.HttpSessionListener;
 import obj.Database;
 
 /**
- * Application Lifecycle Listener implementation class DefaultListener
+ * Application Lifecycle Listener implementation class ConnectionListener
  *
  */
 @WebListener
-public class DefaultListener implements HttpSessionListener {
+public class ConnectionListener implements HttpSessionListener {
 
     /**
      * Default constructor. 
      */
-    public DefaultListener() {
+    public ConnectionListener() {
         // TODO Auto-generated constructor stub
     }
 

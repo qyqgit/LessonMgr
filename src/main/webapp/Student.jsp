@@ -19,8 +19,11 @@
 		<tr bgcolor="#EEEEEE">
 	   		<td>学号</td>
 	   		<td>姓名</td>
-	   		<td>年龄</td>
 	   		<td>性别</td>
+	   		<td>年龄</td>
+	   		<td>科目</td>
+	   		<td>已上课次</td>
+	   		<td>总课次</td>
 	   		<td>上课记录</td>
 		</tr>
 		<c:forEach var="studentList" items="${requestScope.studentList }">
@@ -30,16 +33,39 @@
                     <c:url value="GetSubject?studentId=${studentList.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${studentList.name} " escapeXml="false"></c:out></a>
                 </td>
+                <td>
+	     			<c:if test="${studentList.sex == 0 }">男</c:if>
+	     			<c:if test="${studentList.sex == 1 }">女</c:if>
+	     		</td>
 	     		<td>
 	     			<c:if test="${studentList.birthday != null }"> 
 	     				<c:out value="${fn:split(ctime, '-')[0] - fn:split(studentList.birthday, '-')[0]}"/>
 	     			</c:if>
 	     		</td>
 	     		<td>
-	     			<c:if test="${studentList.sex == 0 }">男</c:if>
-	     			<c:if test="${studentList.sex == 1 }">女</c:if>
+	     			<table>
+	     				<tr>
+							<c:set value="0" var="cooked_sum"/>
+ 							<c:set value="0" var="amount_sum"/>
+	     					<c:forEach var="subject" items="${studentList.subjectList }">
+								<c:set value="${cooked_sum+subject.cooked }" var="cooked_sum"/>
+								<c:set value="${amount_sum+subject.amount }" var="amount_sum"/>
+	     						<td>
+	     							<c:url value="GetLesson?subjectId=${subject.id}&studentId=${studentList.id}" var="url"></c:url>
+                    				<a href="${url }" style="text-decoration:none;"><c:out value="${subject.name} " escapeXml="false"></c:out></a>
+	     						</td>
+	     						<td>
+	     							${subject.cooked}
+	     						</td>
+	     					</c:forEach>
+	     				</tr>
+	     			</table>
 	     		</td>
-	     		<td><a href="GetRecord?studentId=${studentList.id }" style="text-decoration:none;">上课记录</a></td>
+	     		<td>${cooked_sum }</td>
+	     		<td>${amount_sum}</td>
+	     		<td>
+	     			<a href="GetRecord?studentId=${studentList.id }" style="text-decoration:none;">上课记录</a>
+	     		</td>
 	     		<!--<td><c:out value="${studentList.date}" /></td>-->
 	 		</tr>
 		</c:forEach>

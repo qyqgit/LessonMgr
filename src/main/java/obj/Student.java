@@ -11,6 +11,7 @@ public class Student {
 	private String birthday;
 	private String sex;
 	private String date;
+	private ArrayList<Subject> subjectList;
 	public String getId() {
 		return id;
 	}
@@ -42,6 +43,12 @@ public class Student {
 		this.date = date;
 	}
 	
+	public ArrayList<Subject> getSubjectList() {
+		return subjectList;
+	}
+	public void setSubjectList(ArrayList<Subject> subjectList) {
+		this.subjectList = subjectList;
+	}
 	public Student(String id, String name, String birthday, String sex, String date) {
 		super();
 		this.id = id;
