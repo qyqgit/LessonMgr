@@ -13,8 +13,9 @@
  		<tr bgcolor="#EEEEEE">
      		<td>编号</td>
      		<td>名称</td>
-               <td style="text-align: center"><span style="float:left">上课日期</span><span>上课时间</span><span style="float:right">添加记录</span></td>
-               <td>删除记录</td>
+     		<td>上课次数</td>
+            <td style="text-align: center"><span style="float:left">上课日期</span><span>上课时间</span><span style="float:right">添加记录</span></td>
+            <td>删除记录</td>
  		</tr>
 		<c:forEach var="lessonList" items="${requestScope.lessonList }">
 	 		<tr <c:if test="${lessonList.datetime != null}">bgcolor="#CCFF80"</c:if>>
@@ -23,6 +24,7 @@
                     <c:url value="LessonDetail?lessonId=${lessonList.id}" var="url"></c:url>
                     <a href="${url }" style="text-decoration:none;"><c:out value="${lessonList.name} " escapeXml="false"></c:out></a>
                 </td>
+                <td><c:out value="${lessonList.familiar }"/></td>
                 <td>
 				    <form method="post" action="AddRecord?lessonId=${lessonList.id}&subjectId=${lessonList.subjectId}&studentId=${requestScope.student.id}">
 						<input type="date" name="date_record" value="${fn:split(lessonList.datetime, ' ')[0]}">

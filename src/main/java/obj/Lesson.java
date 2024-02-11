@@ -10,6 +10,8 @@ public class Lesson {
 	private String name;
 	private String subjectId;
 	private String datetime;
+	private String familiar;
+	
 	public String getId() {
 		return id;
 	}
@@ -28,9 +30,6 @@ public class Lesson {
 	public void setSubjectId(String subjectId) {
 		this.subjectId = subjectId;
 	}
-	
-	
-	
 	public String getDatetime() {
 		return datetime;
 	}
@@ -38,6 +37,12 @@ public class Lesson {
 		this.datetime = datetime;
 	}
 	
+	public String getFamiliar() {
+		return familiar;
+	}
+	public void setFamiliar(String familiar) {
+		this.familiar = familiar;
+	}
 	public Lesson(String id, String name, String subjectId, String datetime) {
 		super();
 		this.id = id;
@@ -45,21 +50,24 @@ public class Lesson {
 		this.subjectId = subjectId;
 		this.datetime = datetime;
 	}
+	public Lesson() {
+		// TODO Auto-generated constructor stub
+	}
 	public static boolean getLessonList(Connection conn, ArrayList<Lesson> classList, String subjectId) {
 		PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM lesson.lesson WHERE lesson.id_subject_lesson = ?) AS table1 LEFT JOIN lesson.record ON table1.id_lesson = record.id_lesson_record ORDER BY id_lesson");
+            pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM (SELECT * FROM lesson.lesson WHERE lesson.id_subject_lesson = ?) AS table1 LEFT JOIN lesson.record ON table1.id_lesson = record.id_lesson_record)AS table2 LEFT JOIN (SELECT id_lesson,name_lesson,count(id_lesson) FROM lesson.lesson ,lesson.record WHERE id_lesson = id_lesson_record GROUP BY name_lesson)AS table3 ON table2.name_lesson LIKE table3.name_lesson ORDER BY table2.id_lesson");
             pstmt.setString(1, subjectId);
             rs = pstmt.executeQuery();
             
             while (rs.next()) {
-                Lesson lesson = new Lesson(
-                        rs.getString("id_lesson"),
-                        rs.getString("name_lesson"),
-                        rs.getString("id_subject_lesson"),
-                        rs.getString("date_record")
-                        );
+            	Lesson lesson = new Lesson();
+            	lesson.setId(rs.getString("id_lesson"));
+            	lesson.setName(rs.getString("name_lesson"));
+            	lesson.setSubjectId(rs.getString("id_subject_lesson"));
+            	lesson.setDatetime(rs.getString("date_record"));
+            	lesson.setFamiliar(rs.getString("count(id_lesson)"));
                 classList.add(lesson);
             }
             return true;
@@ -97,7 +105,7 @@ public class Lesson {
     		conn.setAutoCommit(false);
         	pstmt = conn.prepareStatement("INSERT INTO `lesson`.`lesson` (`name_lesson`, `id_subject_lesson`) VALUES (?, ?)");
         	for(int i = 0; i < names.length; i++) {
-                pstmt.setString(1, names[i]);
+                pstmt.setString(1, names[i].trim());
                 pstmt.setString(2, subjectId);
                 pstmt.addBatch();
         	}
