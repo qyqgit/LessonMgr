@@ -49,7 +49,7 @@ public class Lesson {
 		PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM lesson.lesson WHERE lesson.id_subject_lesson = ?) AS table1 LEFT JOIN lesson.record ON table1.id_lesson = record.id_lesson_record");
+            pstmt = conn.prepareStatement("SELECT * FROM (SELECT * FROM lesson.lesson WHERE lesson.id_subject_lesson = ?) AS table1 LEFT JOIN lesson.record ON table1.id_lesson = record.id_lesson_record ORDER BY id_lesson");
             pstmt.setString(1, subjectId);
             rs = pstmt.executeQuery();
             
@@ -80,6 +80,36 @@ public class Lesson {
             pstmt.setString(1, name);
             pstmt.setString(2, subjectId);
             pstmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            Database.closePreparedStatement(pstmt);
+        }
+        return false;
+	}
+	
+	public static boolean addLessonList(Connection conn, String[] names, String subjectId) {
+		PreparedStatement pstmt = null;
+        try {
+    		boolean status = conn.getAutoCommit();
+    		conn.setAutoCommit(false);
+        	pstmt = conn.prepareStatement("INSERT INTO `lesson`.`lesson` (`name_lesson`, `id_subject_lesson`) VALUES (?, ?)");
+        	for(int i = 0; i < names.length; i++) {
+                pstmt.setString(1, names[i]);
+                pstmt.setString(2, subjectId);
+                pstmt.addBatch();
+        	}
+
+            int[] counts = pstmt.executeBatch();
+            conn.commit();
+            for(int i : counts) {
+            	if(i == 0)
+            		conn.rollback();
+            }
+            conn.setAutoCommit(true);
+            conn.setAutoCommit(status);
             return true;
         } catch (Exception e) {
             // TODO Auto-generated catch block

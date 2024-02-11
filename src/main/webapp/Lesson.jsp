@@ -36,11 +36,11 @@
 	 		</tr>
 		</c:forEach>
 	</table>
-	<form method="post" action="AddLesson?subjectId=${param.subjectId}&studentId=${requestScope.student.id}">
-		<label >添加一节课：</label><br>
-		<input type="text" name="name">
+	<form method="post" action="AddLessonList?subjectId=${param.subjectId }&studentId=${requestScope.student.id}">
+		<label >添加多节课：</label><br>
+		<textarea name="nameList" cols="55" rows="9"></textarea>
+		<br>
 		<input type="submit" value="添加">
-		<a href="GetSubject?studentId=${requestScope.student.id}" style="text-decoration:none;">返回</a>
 		<a href="GetStudent" style="text-decoration:none;">返回首页</a>
 	</form>
 </body>

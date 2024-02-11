@@ -30,7 +30,7 @@ public class Database {
     }
     public static boolean closeConnection(Connection conn) {
     	try {
-			conn.close();
+			if(conn != null)conn.close();
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -40,7 +40,7 @@ public class Database {
     }
     public static boolean closeResultSet(ResultSet rs) {
         try {
-            rs.close();
+            if(rs != null)rs.close();
             return true;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -51,7 +51,7 @@ public class Database {
     }
     public static boolean closePreparedStatement(PreparedStatement pstmt) {
         try {
-            pstmt.close();
+            if(pstmt != null)pstmt.close();
             return true;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
