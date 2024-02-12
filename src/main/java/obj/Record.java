@@ -138,7 +138,27 @@ public class Record {
 		}
 		return false; 
 	}
+	public static boolean haveRecord(Connection conn, String lessonId) {
+		ResultSet rs = null;
+        PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT id_record FROM lesson.record WHERE id_lesson_record = ?");
+			pstmt.setString(1, lessonId);
+			rs = pstmt.executeQuery();
+			if(rs.next())
+				return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Database.closeResultSet(rs);
+			Database.closePreparedStatement(pstmt);
+		}
+		return false;
+	}
 	public static boolean addRecord(Connection conn, Record myRecord) {
+		if(Record.haveRecord(conn, myRecord.getIdLesson()))
+			return false;
 		PreparedStatement pstmt = null;
         try {
             pstmt = conn.prepareStatement("INSERT INTO `lesson`.`record` (`id_lesson_record`, `id_subject_record`, `date_record`, `id_teacher_record`, `id_student_record`) VALUES (?, ?, ?, ?, ?)");
@@ -157,6 +177,13 @@ public class Record {
         }
 		return false;
 		
+	}
+	public static boolean addRecordList(Connection conn, ArrayList<Record> recordList) {
+		for(Record record : recordList) {
+			if(!addRecord(conn,  record))
+				return false;
+		}
+		return true;
 	}
 	public static boolean deleteRecord(Connection conn, String studentId, String lessonId) {
 		Record latestRecord = new Record();

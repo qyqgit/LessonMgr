@@ -53,6 +53,27 @@ public class Lesson {
 	public Lesson() {
 		// TODO Auto-generated constructor stub
 	}
+	public static String getLessonIDByLessonNameSubjectID(Connection conn, String lessonName, String subjectId) {
+		PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM lesson.lesson WHERE id_subject_lesson = ? AND name_lesson LIKE ?");
+            pstmt.setString(1, subjectId);
+            pstmt.setString(2, lessonName);
+            //pstmt.setString(2, "%" + lessonName + "%");
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+            	return rs.getString("id_lesson");
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally {
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
+        }
+		return "";
+	}
 	public static boolean getLessonList(Connection conn, ArrayList<Lesson> classList, String subjectId) {
 		PreparedStatement pstmt = null;
         ResultSet rs = null;

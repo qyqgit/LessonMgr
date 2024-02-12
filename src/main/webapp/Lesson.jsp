@@ -43,6 +43,21 @@
 		<textarea name="nameList" cols="55" rows="9"></textarea>
 		<br>
 		<input type="submit" value="添加">
+	</form>
+		<form method="post" action="AddRecordList?subjectId=${param.subjectId }&studentId=${requestScope.student.id}">
+		<label >添加多个记录：</label><br>
+		<table>
+			<c:forEach var="record" items="${requestScope.records}">
+				<c:if test="${record != null}">
+					<tr>
+						<td style="color:red">添加失败：</td><td><c:out value="${record}"/></td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</table>
+		<textarea name="recordList" cols="55" rows="9"></textarea>
+		<br>
+		<input type="submit" value="添加">
 		<a href="GetStudent" style="text-decoration:none;">返回首页</a>
 	</form>
 </body>
