@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class Login
  */
-@WebFilter(value={"/AddRecord", "/DeleteRecord"})
+@WebFilter(value={"/AddRecord", "/DeleteRecord", "/AddRecordList"})
 public class Login implements Filter {
 
     /**
