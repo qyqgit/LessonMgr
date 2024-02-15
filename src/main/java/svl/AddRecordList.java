@@ -53,7 +53,7 @@ public class AddRecordList extends HttpServlet {
             	String recordRawString = records[i].trim();
             	Pattern dateYearPat = Pattern.compile("\\d{1,4}\\.\\d{1,2}.\\d{1,2}");
         		Pattern datePat = Pattern.compile("\\d{1,2}\\.\\d{1,2}");
-            	Pattern namePat = Pattern.compile("[\u4e00-\u9fa5]{1,}");
+            	Pattern namePat = Pattern.compile("[\u4E00-\u9FA5A-Za-z]+");
             	Matcher matcherDateYear = dateYearPat.matcher(recordRawString);
             	Matcher matcherDate =datePat.matcher(recordRawString);
             	Matcher matcherName = namePat.matcher(recordRawString);
