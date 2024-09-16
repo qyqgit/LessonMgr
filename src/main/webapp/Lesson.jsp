@@ -13,7 +13,7 @@
  		<tr bgcolor="#EEEEEE">
      		<td>编号</td>
      		<td>名称</td>
-     		<td>上课次数</td>
+     		<td>教师授课次数</td>
             <td style="text-align: center"><span style="float:left">上课日期</span><span>上课时间</span><span style="float:right">添加记录</span></td>
             <td>删除记录</td>
  		</tr>

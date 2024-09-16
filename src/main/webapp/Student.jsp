@@ -21,8 +21,8 @@
 	   		<td>姓名</td>
 	   		<td>性别</td>
 	   		<td>年龄</td>
-	   		<td>科目</td>
-	   		<td>已上课次</td>
+	   		<td>科目(上课次数)</td>
+	   		<td>已上课次合计</td>
 	   		<td>总课次</td>
 	   		<td>上课记录</td>
 		</tr>
@@ -55,7 +55,7 @@
                     				<a href="${url }" style="text-decoration:none;"><c:out value="${subject.name} " escapeXml="false"></c:out></a>
 	     						</td>
 	     						<td>
-	     							${subject.cooked}
+	     							(${subject.cooked})
 	     						</td>
 	     					</c:forEach>
 	     				</tr>
