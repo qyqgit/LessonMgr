@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
 			Connection conn = (Connection)request.getSession().getAttribute("conn");
 			Teacher teacher = new Teacher();
 			Teacher.getTeacher(conn, teacher, teacherId);
-			if(teacher.getPassword().equalsIgnoreCase(teacherPassword)) {
+			if(teacher.getPassword() != null && teacher.getPassword().equals(teacherPassword)) {
 				request.getSession().setAttribute("teacher", teacher);
 				Cookie ck = new Cookie("TOKEN", request.getSession().getId());
 		        ck.setMaxAge(3600 * 24 * 31);
